@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Slot>
+  <InputHasFood>
+    <position>
+      <PositionLeft />
+    </position>
+    <Slot />
+    <Slot>
+      <InputPositionMatch>
+        <Slot>
+          <NumericNode>
+            <left>
+              <InputDirtValue>
+                <position>
+                  <PositionLeft />
+                </position>
+              </InputDirtValue>
+            </left>
+            <right>
+              <InputGetX>
+                <position>
+                  <PositionRight />
+                </position>
+              </InputGetX>
+            </right>
+            <Slot />
+            <Slot />
+            <Slot>
+              <InputDirectionTo>
+                <position>
+                  <PositionDown />
+                </position>
+                <Slot />
+                <Slot />
+                <Slot />
+                <Slot />
+                <Slot />
+              </InputDirectionTo>
+            </Slot>
+          </NumericNode>
+        </Slot>
+        <Slot />
+      </InputPositionMatch>
+    </Slot>
+  </InputHasFood>
+</Slot>
