@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class HasFood : Node {
+public class HasFood : MyNode {
 
 	private GameObject position;
 
 	public override void outFocus() {
 		saveSelection();
 		if (position != null) {
-			(position.GetComponent<Node> ()).outFocus ();
+			(position.GetComponent<MyNode> ()).outFocus ();
 		}
 		instanceID = int.MinValue;
 		if (position != null) {
@@ -27,8 +27,8 @@ public class HasFood : Node {
 
 		if (nodes.TryGetValue (instanceID, out previous)) {
 			if (previous != null) {
-				Node prevNode = previous.GetComponent<Node> ();
-				prevNode.outFocus ();
+				MyNode prevMyNode = previous.GetComponent<MyNode> ();
+				prevMyNode.outFocus ();
 			}
 		}
 		if (instanceID != id) {
@@ -38,7 +38,7 @@ public class HasFood : Node {
 			leftObj.transform.localScale = new Vector3 (1, 1, 1);
 			if (position != null) {
 				position.transform.SetParent(leftObj.transform);
-				(position.GetComponent<Node> ()).onFocus ();
+				(position.GetComponent<MyNode> ()).onFocus ();
 			}
 		}
 	}
@@ -46,7 +46,7 @@ public class HasFood : Node {
 	public override void saveSelection () {
 		if (GameObject.Find ("Left_1").transform.childCount > 0) {
 			position = GameObject.Find ("Left_1").transform.GetChild(0).gameObject;
-			(position.GetComponent<Node> ()).saveSelection ();
+			(position.GetComponent<MyNode> ()).saveSelection ();
 		} else {
 			position = null;
 		}
@@ -56,7 +56,7 @@ public class HasFood : Node {
 		XmlElement element = doc.CreateElement( string.Empty, this.name, string.Empty );
 		if (position != null) {
 			XmlElement positionInput =  doc.CreateElement( string.Empty, "position", string.Empty );
-			positionInput.AppendChild((position.GetComponent<Node>()).toXML(doc));
+			positionInput.AppendChild((position.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (positionInput);
 		}
 		return element;
@@ -77,7 +77,7 @@ public class HasFood : Node {
 		outFocus ();
 	}
 
-	public override void DropNode() {
+	public override void DropMyNode() {
 		Vector3 pos = transform.position;
 		AddSlot (pos, transform);
 		AddSlot (pos, transform);

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class Value : Node {
+public class Value : MyNode {
 
 	private int val;
 	private bool focus = false;
@@ -53,7 +53,7 @@ public class Value : Node {
 		return transform.parent.name == "Left_1" || transform.parent.name == "Right_1";
 	}
 
-	public override void DropNode() {
+	public override void DropMyNode() {
 		onFocus ();
 	}
 

@@ -7,13 +7,13 @@ public class StartUp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartUp.init ();
-		Node[] nodes = GameObject.FindObjectsOfType<Node> ();
+		MyNode[] nodes = GameObject.FindObjectsOfType<MyNode> ();
 		for (int i = 0; i < nodes.Length; i++) {
 			nodes[i].id = i;
-			Node.idCounter = i;
-			Node.nodes.Add (i, nodes [i].gameObject);
+			MyNode.idCounter = i;
+			MyNode.nodes.Add (i, nodes [i].gameObject);
 		}
-		Node.idCounter += 1;
+		MyNode.idCounter += 1;
 	}
 
 	public static void init () {

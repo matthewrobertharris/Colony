@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FFCCF9A9-3F7D-ABBB-061A-681819E2D04E}</ProjectGuid>
+    <ProjectGuid>{82EFE8DB-917D-C6C6-E8E4-0A98E1FD4C5C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -52,13 +52,13 @@
      <Compile Include="Assets\scripts\Inputs\GetX.cs" />
      <Compile Include="Assets\scripts\Inputs\GetY.cs" />
      <Compile Include="Assets\scripts\Inputs\HasFood.cs" />
+     <Compile Include="Assets\scripts\Inputs\MyTime.cs" />
      <Compile Include="Assets\scripts\Inputs\NumericInput.cs" />
      <Compile Include="Assets\scripts\Inputs\PositionMatch.cs" />
      <Compile Include="Assets\scripts\Inputs\Random.cs" />
-     <Compile Include="Assets\scripts\Inputs\Time.cs" />
      <Compile Include="Assets\scripts\Inputs\ValidPosition.cs" />
      <Compile Include="Assets\scripts\Inputs\Value.cs" />
-     <Compile Include="Assets\scripts\Node.cs" />
+     <Compile Include="Assets\scripts\MyNode.cs" />
      <Compile Include="Assets\scripts\Outputs\SetPrimary.cs" />
      <Compile Include="Assets\scripts\Outputs\SetSecondary.cs" />
      <Compile Include="Assets\scripts\Positions\Positions.cs" />

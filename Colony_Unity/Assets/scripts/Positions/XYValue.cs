@@ -97,9 +97,9 @@ public class XYValue : Positions {
 		}
 		// This is for saving the selection, so if you drag a selection from left-right/right-left, it keeps track of the selection's child objects
 		/*GameObject selection;
-		if (Node.nodes.TryGetValue (Node.instanceID, out selection)) {
-			Node selectionNode = selection.GetComponent<Node> ();
-			selectionNode.saveSelection ();
+		if (MyNode.nodes.TryGetValue (MyNode.instanceID, out selection)) {
+			MyNode selectionMyNode = selection.GetComponent<MyNode> ();
+			selectionMyNode.saveSelection ();
 		}*/
 		focus = true;
 	}

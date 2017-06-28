@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class NumericInput : Node {
+public class NumericInput : MyNode {
 
 	private GameObject left;
 	private GameObject right;
@@ -15,8 +15,8 @@ public class NumericInput : Node {
 
 		if (nodes.TryGetValue (instanceID, out previous)) {
 			if (previous != null) {
-				Node prevNode = previous.GetComponent<Node> ();
-				prevNode.outFocus ();
+				MyNode prevMyNode = previous.GetComponent<MyNode> ();
+				prevMyNode.outFocus ();
 			}
 		}
 		if (instanceID != id) {
@@ -28,12 +28,12 @@ public class NumericInput : Node {
 			rightObj.transform.localScale = new Vector3 (1, 1, 1);
 			if (left != null) {
 				left.transform.SetParent(leftObj.transform);
-				(left.GetComponent<Node> ()).onFocus ();
+				(left.GetComponent<MyNode> ()).onFocus ();
 			}
 
 			if (right != null) {
 				right.transform.SetParent(rightObj.transform);
-				(right.GetComponent<Node> ()).onFocus ();
+				(right.GetComponent<MyNode> ()).onFocus ();
 			}
 
 		}
@@ -42,11 +42,11 @@ public class NumericInput : Node {
 	public override void saveSelection() {
 		left = getSelection ("Left_1");
 		if (left != null) {
-			(left.GetComponent<Node> ()).saveSelection ();
+			(left.GetComponent<MyNode> ()).saveSelection ();
 		}
 		right = getSelection ("Right_1");
 		if (right != null) {
-			(right.GetComponent<Node> ()).saveSelection ();
+			(right.GetComponent<MyNode> ()).saveSelection ();
 		}
 	}
 
@@ -61,10 +61,10 @@ public class NumericInput : Node {
 	public override void outFocus() {
 		saveSelection();
 		if (left != null) {
-			(left.GetComponent<Node> ()).outFocus ();
+			(left.GetComponent<MyNode> ()).outFocus ();
 		}
 		if (right != null) {
-			(right.GetComponent<Node> ()).outFocus ();
+			(right.GetComponent<MyNode> ()).outFocus ();
 		}
 		instanceID = int.MinValue;
 		if (left != null) {
@@ -90,12 +90,12 @@ public class NumericInput : Node {
 		XmlElement element = doc.CreateElement( string.Empty, this.name, string.Empty );
 		if (left != null) {
 			XmlElement leftInput =  doc.CreateElement( string.Empty, "left", string.Empty );
-			leftInput.AppendChild((left.GetComponent<Node>()).toXML(doc));
+			leftInput.AppendChild((left.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (leftInput);
 		}
 		if (right != null) {
 			XmlElement rightInput =  doc.CreateElement( string.Empty, "right", string.Empty );
-			rightInput.AppendChild((right.GetComponent<Node>()).toXML(doc));
+			rightInput.AppendChild((right.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (rightInput);
 		}
 		return element;

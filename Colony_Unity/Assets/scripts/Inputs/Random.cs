@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class Random : Node {
+public class Random : MyNode {
 
 	public override void onFocus() {
 	}
@@ -23,6 +23,6 @@ public class Random : Node {
 		return transform.parent.name == "Left_1" || transform.parent.name == "Right_1";
 	}
 
-	public override void DropNode() {
+	public override void DropMyNode() {
 	}
 }

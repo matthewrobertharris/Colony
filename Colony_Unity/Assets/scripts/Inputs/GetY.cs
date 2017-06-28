@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class GetY : Node {
+public class GetY : MyNode {
 
 	private GameObject position;
 
 	public override void outFocus() {
 		saveSelection();
 		if (position != null) {
-			(position.GetComponent<Node> ()).outFocus ();
+			(position.GetComponent<MyNode> ()).outFocus ();
 		}
 		if (transform.parent.name == "Left_1") {
 			GameObject.Find ("Left_2").transform.localScale = new Vector3 (0,0,0);
@@ -26,13 +26,13 @@ public class GetY : Node {
 			GameObject.Find ("Left_2").transform.localScale = new Vector3 (1, 1, 1);
 			if (position != null) {
 				position.transform.parent = GameObject.Find ("Left_2").transform;
-				(position.GetComponent<Node> ()).onFocus ();
+				(position.GetComponent<MyNode> ()).onFocus ();
 			}
 		} else if (transform.parent.name == "Right_1") {
 			GameObject.Find ("Right_2").transform.localScale = new Vector3 (1, 1, 1);
 			if (position != null) {
 				position.transform.parent = GameObject.Find ("Right_2").transform;
-				(position.GetComponent<Node> ()).onFocus ();
+				(position.GetComponent<MyNode> ()).onFocus ();
 			}
 		}
 	}
@@ -41,12 +41,12 @@ public class GetY : Node {
 		if (transform.parent.name == "Left_1") {
 			if (GameObject.Find ("Left_2").transform.childCount > 0) {
 				position = GameObject.Find ("Left_2").transform.GetChild (0).gameObject;
-				(position.GetComponent<Node> ()).saveSelection ();
+				(position.GetComponent<MyNode> ()).saveSelection ();
 			}
 		} else if (transform.parent.name == "Right_1") {
 			if (GameObject.Find ("Right_2").transform.childCount > 0) {
 				position = GameObject.Find ("Right_2").transform.GetChild (0).gameObject;
-				(position.GetComponent<Node> ()).saveSelection ();
+				(position.GetComponent<MyNode> ()).saveSelection ();
 			}
 		} else {
 			position = null;
@@ -57,7 +57,7 @@ public class GetY : Node {
 		XmlElement element = doc.CreateElement( string.Empty, this.name, string.Empty );
 		if (position != null) {
 			XmlElement positionInput =  doc.CreateElement( string.Empty, "position", string.Empty );
-			positionInput.AppendChild((position.GetComponent<Node>()).toXML(doc));
+			positionInput.AppendChild((position.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (positionInput);
 		}
 		return element;
@@ -67,7 +67,7 @@ public class GetY : Node {
 		return transform.parent.name == "Left_1" || transform.parent.name == "Right_1";
 	}
 
-	public override void DropNode() {
+	public override void DropMyNode() {
 		onFocus ();
 	}
 

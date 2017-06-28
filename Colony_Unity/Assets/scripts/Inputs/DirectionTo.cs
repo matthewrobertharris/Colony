@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class DirectionTo : Node {
+public class DirectionTo : MyNode {
 
 	private GameObject position;
 
@@ -14,8 +14,8 @@ public class DirectionTo : Node {
 
 		if (nodes.TryGetValue (instanceID, out previous)) {
 			if (previous != null) {
-				Node prevNode = previous.GetComponent<Node> ();
-				prevNode.outFocus ();
+				MyNode prevMyNode = previous.GetComponent<MyNode> ();
+				prevMyNode.outFocus ();
 			}
 		}
 		if (instanceID != id) {
@@ -24,7 +24,7 @@ public class DirectionTo : Node {
 			GameObject.Find ("Left_1").transform.localScale = new Vector3 (1, 1, 1);
 			if (position != null) {
 				position.transform.parent = GameObject.Find ("Left_1").transform;
-				(position.GetComponent<Node> ()).onFocus ();
+				(position.GetComponent<MyNode> ()).onFocus ();
 			}
 
 		}
@@ -33,7 +33,7 @@ public class DirectionTo : Node {
 	public override void saveSelection() {
 		if (GameObject.Find ("Left_1").transform.childCount > 0) {
 			position = GameObject.Find ("Left_1").transform.GetChild(0).gameObject;
-			(position.GetComponent<Node> ()).saveSelection ();
+			(position.GetComponent<MyNode> ()).saveSelection ();
 		} else {
 			position = null;
 		}
@@ -45,7 +45,7 @@ public class DirectionTo : Node {
 		saveSelection();
 		instanceID = int.MinValue;
 		if (position != null) {
-			(position.GetComponent<Node> ()).outFocus ();
+			(position.GetComponent<MyNode> ()).outFocus ();
 			position.transform.parent = null;
 		}
 		Selected.text = "";
@@ -65,7 +65,7 @@ public class DirectionTo : Node {
 		}
 	}*/
 
-	public override void DropNode() {
+	public override void DropMyNode() {
 		Vector3 pos = transform.position;
 		AddSlot (pos, transform);
 		AddSlot (pos, transform);
@@ -79,7 +79,7 @@ public class DirectionTo : Node {
 		XmlElement element = doc.CreateElement( string.Empty, this.name, string.Empty );
 		if (position != null) {
 			XmlElement positionInput =  doc.CreateElement( string.Empty, "position", string.Empty );
-			positionInput.AppendChild((position.GetComponent<Node>()).toXML(doc));
+			positionInput.AppendChild((position.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (positionInput);
 		}
 		return element;

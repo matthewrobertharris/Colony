@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class MyNode : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
 	public int id;
 	public static int instanceID = int.MinValue;
@@ -38,7 +38,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 	#endregion
 
 	public virtual void saveSelection() {
-		// Not applicable for most Nodes, only those with stuff in the selection panel
+		// Not applicable for most MyNodes, only those with stuff in the selection panel
 		// Override in each sub-class
 	}
 
@@ -53,8 +53,8 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 
 		if (nodes.TryGetValue (instanceID, out previous)) {
 			if (previous != null) {
-				Node prevNode = previous.GetComponent<Node> ();
-				prevNode.outFocus ();
+				MyNode prevMyNode = previous.GetComponent<MyNode> ();
+				prevMyNode.outFocus ();
 			}
 		}
 		if (instanceID != id) {
@@ -147,25 +147,25 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 		} else if (startParent.name == "SelectionSlot") {
 			GameObject newObj = GameObject.Instantiate (gameObject, startPosition, Quaternion.identity, startParent);
 			newObj.name = gameObject.name;
-			Node node = newObj.GetComponent<Node> ();
-			Node.idCounter += 1;
-			node.id = Node.idCounter;
-			Node.nodes.Add (node.id, newObj);
-			DropNode ();
+			MyNode node = newObj.GetComponent<MyNode> ();
+			MyNode.idCounter += 1;
+			node.id = MyNode.idCounter;
+			MyNode.nodes.Add (node.id, newObj);
+			DropMyNode ();
 			onFocus ();
 		} else {
 			// always, when the node is dropped, save the current selection, so it will save any selection nodes too
 			GameObject selection;
-			if (Node.nodes.TryGetValue (Node.instanceID, out selection)) {
-				Node selectionNode = selection.GetComponent<Node> ();
-				selectionNode.saveSelection ();
-				//selectionNode.outFocus ();
-				selectionNode.onFocus ();
+			if (MyNode.nodes.TryGetValue (MyNode.instanceID, out selection)) {
+				MyNode selectionMyNode = selection.GetComponent<MyNode> ();
+				selectionMyNode.saveSelection ();
+				//selectionMyNode.outFocus ();
+				selectionMyNode.onFocus ();
 
 			}
 
 		}
-		reorderNodes ();
+		reorderMyNodes ();
 
 	}
 
@@ -175,10 +175,10 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 		return transform.parent.name != "Left_1" && transform.parent.name != "Left_2" && transform.parent.name != "Right_1" && transform.parent.name != "Right_2";
 	}
 
-	public virtual void DropNode() {
+	public virtual void DropMyNode() {
 		Vector3 pos = transform.position;
 		switch (transform.name) {
-		case "PositionNode":
+		case "PositionMyNode":
 			//pos.y -= 100;
 			AddSlot (pos, transform);
 			AddSlot (pos, transform);
@@ -187,20 +187,20 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 			AddSlot (pos, transform);
 			//print ("Add 5 slots for position nodes (4 + current)");
 			break;
-		case "NumericNode":
+		case "NumericMyNode":
 			//pos.y -= 100;
 			AddSlot (pos, transform);
 			AddSlot (pos, transform);
 			AddSlot (pos, transform);
 			//print ("Add 3 slots for numeric nodes");
 			break;
-		case "BooleanNode":
+		case "BooleanMyNode":
 			//pos.y -= 100;
 			AddSlot (pos, transform);
 			AddSlot (pos, transform);
 			//print ("Add 2 slots for boolean nodes");
 			break;
-		case "OutputNode":
+		case "OutputMyNode":
 			//print ("Add no slots (output node goes here)");
 			break;
 		default:
@@ -210,12 +210,12 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 		//onFocus ();
 	}
 
-	public static void reorderNodes() {
+	public static void reorderMyNodes() {
 		Slot root = getRoot ();
 		LinkedList<Slot> list = new LinkedList<Slot> ();
 		int leaves = postOrder (root, list);
-		LinkedList<Vector3> posList = updateNodePositions (list, leaves, 5);
-		displayNodes (posList, list);
+		LinkedList<Vector3> posList = updateMyNodePositions (list, leaves, 5);
+		displayMyNodes (posList, list);
 	}
 
 	public static Slot getRoot() {
@@ -241,29 +241,29 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 		return leaves;
 	}
 
-	public static LinkedList<Vector3> updateNodePositions(LinkedList<Slot> list, int leaves, int maxHeight) {
+	public static LinkedList<Vector3> updateMyNodePositions(LinkedList<Slot> list, int leaves, int maxHeight) {
 		int cellWidth = 30;
 		int cellHeight = 40;
 		int curLeaves = 0;
 		LinkedList<Vector3> positions = new LinkedList<Vector3> ();
 		foreach (Slot slot in list) {
 			if (slot.transform.childCount == 0) {
-				positions.AddLast(updateNode (slot, curLeaves * cellWidth, slot.height * (-cellHeight)));
+				positions.AddLast(updateMyNode (slot, curLeaves * cellWidth, slot.height * (-cellHeight)));
 				curLeaves += 1;
 			} else {
 				Transform node = slot.transform.GetChild (0); // For output nodes
 				if (node.childCount == 0) {
-					positions.AddLast (updateNode (slot, curLeaves * cellWidth, slot.height * (-cellHeight)));
+					positions.AddLast (updateMyNode (slot, curLeaves * cellWidth, slot.height * (-cellHeight)));
 					curLeaves += 1;
 				} else {
-					positions.AddLast (updateBranchNode (slot, slot.height * (-cellHeight)));
+					positions.AddLast (updateBranchMyNode (slot, slot.height * (-cellHeight)));
 				}
 			}
 		}
 		return positions;
 	}
 
-	public static void displayNodes(LinkedList<Vector3> positions, LinkedList<Slot> list) {
+	public static void displayMyNodes(LinkedList<Vector3> positions, LinkedList<Slot> list) {
 		LinkedListNode<Slot> node1 = list.Last;
 		Vector3 offset = new Vector3 (732, 342, 0);
 		for (int i = 0; i < list.Count; i++) {
@@ -274,13 +274,13 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 	}
 
 
-	public static Vector3 updateNode(Slot slot, float x, float y) {
+	public static Vector3 updateMyNode(Slot slot, float x, float y) {
 		Vector3 pos = new Vector3 (x, y, 0);
 		slot.MyPosition = pos;
 		return pos;
 	}
 
-	public static Vector3 updateBranchNode(Slot slot, float y) {
+	public static Vector3 updateBranchMyNode(Slot slot, float y) {
 		float x = slot.MyPosition.x;
 		Transform node = slot.transform.GetChild (0);
 		if (node.childCount > 0) {
@@ -290,7 +290,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 			float endX = childN.MyPosition.x;
 			x = (startX + endX) / 2;
 		}
-		return updateNode (slot, x, y);
+		return updateMyNode (slot, x, y);
 	}
 
 	public static string outputList(LinkedList<Slot> list) {

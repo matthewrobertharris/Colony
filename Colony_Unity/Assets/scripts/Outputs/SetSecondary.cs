@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class SetSecondary : Node {
+public class SetSecondary : MyNode {
 
 	private GameObject secondary;
 
@@ -14,8 +14,8 @@ public class SetSecondary : Node {
 
 		if (nodes.TryGetValue (instanceID, out previous)) {
 			if (previous != null) {
-				Node prevNode = previous.GetComponent<Node> ();
-				prevNode.outFocus ();
+				MyNode prevMyNode = previous.GetComponent<MyNode> ();
+				prevMyNode.outFocus ();
 			}
 		}
 		if (instanceID != id) {
@@ -24,7 +24,7 @@ public class SetSecondary : Node {
 			GameObject.Find ("Left_1").transform.localScale = new Vector3 (1, 1, 1);
 			if (secondary != null) {
 				secondary.transform.parent = GameObject.Find ("Left_1").transform;
-				(secondary.GetComponent<Node> ()).onFocus ();
+				(secondary.GetComponent<MyNode> ()).onFocus ();
 			}
 
 		}
@@ -33,7 +33,7 @@ public class SetSecondary : Node {
 	public override void saveSelection() {
 		if (GameObject.Find ("Left_1").transform.childCount > 0) {
 			secondary = GameObject.Find ("Left_1").transform.GetChild(0).gameObject;
-			(secondary.GetComponent<Node> ()).saveSelection ();
+			(secondary.GetComponent<MyNode> ()).saveSelection ();
 		} else {
 			secondary = null;
 		}
@@ -45,7 +45,7 @@ public class SetSecondary : Node {
 		saveSelection();
 		instanceID = int.MinValue;
 		if (secondary != null) {
-			(secondary.GetComponent<Node> ()).outFocus ();
+			(secondary.GetComponent<MyNode> ()).outFocus ();
 			secondary.transform.parent = null;
 		}
 		Selected.text = "";
@@ -69,7 +69,7 @@ public class SetSecondary : Node {
 		XmlElement element = doc.CreateElement( string.Empty, this.name, string.Empty );
 		if (secondary != null) {
 			XmlElement secondaryInput =  doc.CreateElement( string.Empty, "secondary", string.Empty );
-			secondaryInput.AppendChild((secondary.GetComponent<Node>()).toXML(doc));
+			secondaryInput.AppendChild((secondary.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (secondaryInput);
 		}
 		return element;

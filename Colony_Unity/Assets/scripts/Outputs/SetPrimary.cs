@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.EventSystems;
 
-public class SetPrimary : Node {
+public class SetPrimary : MyNode {
 
 	private GameObject primary;
 
@@ -14,8 +14,8 @@ public class SetPrimary : Node {
 
 		if (nodes.TryGetValue (instanceID, out previous)) {
 			if (previous != null) {
-				Node prevNode = previous.GetComponent<Node> ();
-				prevNode.outFocus ();
+				MyNode prevMyNode = previous.GetComponent<MyNode> ();
+				prevMyNode.outFocus ();
 			}
 		}
 		if (instanceID != id) {
@@ -24,7 +24,7 @@ public class SetPrimary : Node {
 			GameObject.Find ("Left_1").transform.localScale = new Vector3 (1, 1, 1);
 			if (primary != null) {
 				primary.transform.parent = GameObject.Find ("Left_1").transform;
-				(primary.GetComponent<Node> ()).onFocus ();
+				(primary.GetComponent<MyNode> ()).onFocus ();
 			}
 
 		}
@@ -33,7 +33,7 @@ public class SetPrimary : Node {
 	public override void saveSelection() {
 		if (GameObject.Find ("Left_1").transform.childCount > 0) {
 			primary = GameObject.Find ("Left_1").transform.GetChild(0).gameObject;
-			(primary.GetComponent<Node> ()).saveSelection ();
+			(primary.GetComponent<MyNode> ()).saveSelection ();
 		} else {
 			primary = null;
 		}
@@ -45,7 +45,7 @@ public class SetPrimary : Node {
 		saveSelection();
 		instanceID = int.MinValue;
 		if (primary != null) {
-			(primary.GetComponent<Node> ()).outFocus ();
+			(primary.GetComponent<MyNode> ()).outFocus ();
 			primary.transform.parent = null;
 		}
 		Selected.text = "";
@@ -69,7 +69,7 @@ public class SetPrimary : Node {
 		XmlElement element = doc.CreateElement( string.Empty, this.name, string.Empty );
 		if (primary != null) {
 			XmlElement primaryInput =  doc.CreateElement( string.Empty, "primary", string.Empty );
-			primaryInput.AppendChild((primary.GetComponent<Node>()).toXML(doc));
+			primaryInput.AppendChild((primary.GetComponent<MyNode>()).toXML(doc));
 			element.AppendChild (primaryInput);
 		}
 		return element;

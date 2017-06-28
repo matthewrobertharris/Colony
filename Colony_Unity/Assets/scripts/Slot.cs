@@ -66,9 +66,9 @@ public class Slot : MonoBehaviour, IDropHandler {
 	
 		GameObject previous;
 
-		if (Node.nodes.TryGetValue (Node.instanceID, out previous)) {
-			Node prevNode = previous.GetComponent<Node> ();
-			prevNode.saveSelection ();
+		if (MyNode.nodes.TryGetValue (MyNode.instanceID, out previous)) {
+			MyNode prevMyNode = previous.GetComponent<MyNode> ();
+			prevMyNode.saveSelection ();
 		}
 
 		XmlElement element = ToXML(doc);
@@ -85,7 +85,7 @@ public class Slot : MonoBehaviour, IDropHandler {
 
 		if (transform.childCount > 0) {
 			Transform nodeObj = transform.GetChild (0).gameObject.transform;
-			Node node = (Node)nodeObj.GetComponent<Node> ();
+			MyNode node = (MyNode)nodeObj.GetComponent<MyNode> ();
 			XmlElement nodeElement = node.toXML (doc);
 			slotElement.AppendChild( nodeElement );
 			int children = nodeObj.childCount;
@@ -119,7 +119,7 @@ public class Slot : MonoBehaviour, IDropHandler {
 	public void OnDrop (PointerEventData eventData)
 	{
 		if (!item) {
-			Node.itemBeingDragged.transform.SetParent (transform);
+			MyNode.itemBeingDragged.transform.SetParent (transform);
 		}
 	}
 
